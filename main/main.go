@@ -2,64 +2,50 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
-	"os"
 	"time"
 
-	"github.com/codeuniversity/nervo/proto"
+	"github.com/alexmorten/mhist/models"
+	mhist "github.com/alexmorten/mhist/proto"
+
 	"google.golang.org/grpc"
 )
 
 func main() {
-	conn, err := grpc.Dial(os.Args[1], grpc.WithInsecure())
+	var mhistAddress string
+	flag.StringVar(&mhistAddress, "mhist_address", "localhost:6666", "address to mhist including port")
+	flag.Parse()
+	mhistConn, err := grpc.Dial(mhistAddress, grpc.WithInsecure())
 	if err != nil {
 		panic(err)
 	}
-	c := proto.NewNervoServiceClient(conn)
+	mhistC := mhist.NewMhistClient(mhistConn)
 
-	response, err := c.ListControllers(
-		context.Background(),
-		&proto.ControllerListRequest{},
+	moveLeg(mhistC, "leg1")
+}
+
+func moveLeg(c mhist.MhistClient, portName string) {
+	stream, err := c.StoreStream(context.Background())
+	if err != nil {
+		panic(err)
+	}
+	write(stream, portName, "move up")
+	time.Sleep(1 * time.Second)
+	write(stream, portName, "rotate 30")
+	time.Sleep(1 * time.Second)
+	write(stream, portName, "move down")
+	time.Sleep(1 * time.Second)
+	write(stream, portName, "rotate -30")
+}
+
+func write(c mhist.Mhist_StoreStreamClient, legName, message string) {
+	err := c.Send(
+		&mhist.MeasurementMessage{Name: "gait_actions", Measurement: mhist.MeasurementFromModel(&models.Raw{
+			Value: []byte(fmt.Sprintf("%s %s", legName, message)),
+		})},
 	)
 
-	if err != nil {
-		panic(err)
-	}
-
-	for index, info := range response.ControllerInfos {
-		fmt.Println(index, info.Name, info.PortName)
-	}
-
-	portName := findLeg1PortName(response.ControllerInfos)
-	if portName == "" {
-		panic("Oh fuck, no port name")
-	}
-	moveLeg(c, portName)
-}
-
-func findLeg1PortName(infos []*proto.ControllerInfo) string {
-	for _, info := range infos {
-		if info.Name == "leg1" {
-			return info.PortName
-		}
-	}
-
-	return ""
-}
-
-func moveLeg(c proto.NervoServiceClient, portName string) {
-	write(c, portName, "lift up \n")
-	time.Sleep(1 * time.Second)
-	write(c, portName, "move forward \n")
-	time.Sleep(1 * time.Second)
-	write(c, portName, "lift down \n")
-	time.Sleep(1 * time.Second)
-	write(c, portName, "move back")
-}
-func write(c proto.NervoServiceClient, portName, message string) {
-	_, err := c.WriteToController(context.Background(), &proto.WriteToControllerRequest{
-		ControllerPortName: portName, Message: []byte(message),
-	})
 	if err != nil {
 		panic(err)
 	}
