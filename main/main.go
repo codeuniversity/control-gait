@@ -22,7 +22,12 @@ func main() {
 	}
 	mhistC := mhist.NewMhistClient(mhistConn)
 
-	moveLeg(mhistC, "leg1")
+	go moveLeg(mhistC, "leg1")
+	go moveLeg(mhistC, "leg2")
+	go moveLeg(mhistC, "leg3")
+	go moveLeg(mhistC, "leg4")
+	go moveLeg(mhistC, "leg5")
+	go moveLeg(mhistC, "leg6")
 }
 
 func moveLeg(c mhist.MhistClient, portName string) {
@@ -30,13 +35,17 @@ func moveLeg(c mhist.MhistClient, portName string) {
 	if err != nil {
 		panic(err)
 	}
-	write(stream, portName, "move up")
-	time.Sleep(1 * time.Second)
-	write(stream, portName, "rotate 30")
-	time.Sleep(1 * time.Second)
-	write(stream, portName, "move down")
-	time.Sleep(1 * time.Second)
-	write(stream, portName, "rotate -30")
+
+	for {
+		write(stream, portName, "move up")
+		time.Sleep(time.Second / 10)
+		write(stream, portName, "rotate 30")
+		time.Sleep(time.Second / 10)
+		write(stream, portName, "move down")
+		time.Sleep(time.Second / 10)
+		write(stream, portName, "rotate -20")
+		time.Sleep(time.Second / 10)
+	}
 }
 
 func write(c mhist.Mhist_StoreStreamClient, legName, message string) {
