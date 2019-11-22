@@ -1,9 +1,10 @@
-module github.com/codeuniversity/meb-gait
+module github.com/codeuniversity/control-gait
 
 go 1.13
 
 require (
-	github.com/codeuniversity/nervo v0.0.0-20191009231846-4359b872b69e
+	github.com/alexmorten/mhist v0.2.0
+	github.com/codeuniversity/nervo v0.0.0-20191118103657-0741bd3c3331
 	github.com/cosiner/argv v0.0.1 // indirect
 	github.com/go-delve/delve v1.3.2 // indirect
 	github.com/konsorten/go-windows-terminal-sequences v1.0.2 // indirect
@@ -18,6 +19,6 @@ require (
 	golang.org/x/arch v0.0.0-20190927153633-4e8777c89be4 // indirect
 	golang.org/x/crypto v0.0.0-20191029031824-8986dd9e96cf // indirect
 	golang.org/x/sys v0.0.0-20191029155521-f43be2a4598c // indirect
-	google.golang.org/grpc v1.23.1
+	google.golang.org/grpc v1.24.0
 	gopkg.in/yaml.v2 v2.2.4 // indirect
 )
