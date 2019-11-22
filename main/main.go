@@ -1,14 +1,10 @@
 package main
 
 import (
-	"context"
 	"flag"
-	"fmt"
-	"time"
 
-	"github.com/alexmorten/mhist/models"
 	mhist "github.com/alexmorten/mhist/proto"
-
+	gait "github.com/codeuniversity/control-gait"
 	"google.golang.org/grpc"
 )
 
@@ -22,40 +18,9 @@ func main() {
 	}
 	mhistC := mhist.NewMhistClient(mhistConn)
 
-	go moveLeg(mhistC, "leg1")
-	go moveLeg(mhistC, "leg2")
-	go moveLeg(mhistC, "leg3")
-	go moveLeg(mhistC, "leg4")
-	go moveLeg(mhistC, "leg5")
-	go moveLeg(mhistC, "leg6")
-}
+	executor := gait.NewExecutor(mhistC)
+	go gait.SubscribeToFeedback(mhistC, executor.MarkActionDoneFor)
+	go gait.SubscribeToHighLevelAction(mhistC, executor.AddNextMovement)
 
-func moveLeg(c mhist.MhistClient, portName string) {
-	stream, err := c.StoreStream(context.Background())
-	if err != nil {
-		panic(err)
-	}
-
-	for {
-		write(stream, portName, "move up")
-		time.Sleep(time.Second / 10)
-		write(stream, portName, "rotate 30")
-		time.Sleep(time.Second / 10)
-		write(stream, portName, "move down")
-		time.Sleep(time.Second / 10)
-		write(stream, portName, "rotate -20")
-		time.Sleep(time.Second / 10)
-	}
-}
-
-func write(c mhist.Mhist_StoreStreamClient, legName, message string) {
-	err := c.Send(
-		&mhist.MeasurementMessage{Name: "gait_actions", Measurement: mhist.MeasurementFromModel(&models.Raw{
-			Value: []byte(fmt.Sprintf("%s %s", legName, message)),
-		})},
-	)
-
-	if err != nil {
-		panic(err)
-	}
+	executor.Run()
 }

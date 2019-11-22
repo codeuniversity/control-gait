@@ -8,8 +8,11 @@ github.com/chzyer/logex v1.1.10/go.mod h1:+Ywpsq7O8HXn0nuIou7OrIPyXbp3wmkHB+jjWR
 github.com/chzyer/readline v0.0.0-20180603132655-2972be24d48e/go.mod h1:nSuG5e5PlCu98SY8svDHJxuZscDgtXS6KTTbou5AhLI=
 github.com/chzyer/test v0.0.0-20180213035817-a1ea475d72b1/go.mod h1:Q3SI9o4m/ZMnBNeIyt5eFwwo7qiLfzFZmjNmxjkiQlU=
 github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDkc90ppPyw=
+github.com/codeuniversity/control-gait v0.0.0-20191103100242-248066494bbd h1:8D0Bv69zOn97uNdEXkgj07UEGD0qPJ9d9gYihgLC9Us=
 github.com/codeuniversity/nervo v0.0.0-20191009231846-4359b872b69e h1:qmwnFVwY4pwP+Nsllr1xylRLGVBG1MeJQpIhJ2J7ynA=
 github.com/codeuniversity/nervo v0.0.0-20191009231846-4359b872b69e/go.mod h1:zWDIq4OORk1mJaQltniS7Agkm1HNkAauFe04s3Q6YNU=
+github.com/codeuniversity/nervo v0.0.0-20191118103657-0741bd3c3331 h1:vKB4wV8TaEdvWFfZa3zDXJARd9PQ847BCqyCpkNvqHc=
+github.com/codeuniversity/nervo v0.0.0-20191118103657-0741bd3c3331/go.mod h1:KKHdR6+p4Ady036jPJXZ6n0ao5wZS7bql/0jE/f9th0=
 github.com/coreos/etcd v3.3.10+incompatible/go.mod h1:uF7uidLiAD3TWHmW31ZFd/JWoc32PjwdhPthX9715RE=
 github.com/coreos/go-etcd v2.0.0+incompatible/go.mod h1:Jez6KQU2B/sWsbdaef3ED8NzMklzPG4d5KIOhIy30Tk=
 github.com/coreos/go-semver v0.2.0/go.mod h1:nnelYz7RCh+5ahJtPPxZlU+153eP4D4r3EedlOD2RNk=
@@ -24,6 +27,7 @@ github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSs
 github.com/fsnotify/fsnotify v1.4.7/go.mod h1:jwhsz4b93w/PPRr/qN1Yymfu8t87LnFCMoQvtojpjFo=
 github.com/go-delve/delve v1.3.2 h1:K8VjV+Q2YnBYlPq0ctjrvc9h7h03wXszlszzfGW5Tog=
 github.com/go-delve/delve v1.3.2/go.mod h1:LLw6qJfIsRK9WcwV2IRRqsdlgrqzOeuGrQOCOIhDpt8=
+github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b h1:VKtxabqXZkF25pY9ekfRL6a582T4P37/31XEstQ5p58=
 github.com/golang/glog v0.0.0-20160126235308-23def4e6c14b/go.mod h1:SBH7ygxi8pfUlaOkMMuAQtPIUF8ecWP5IEl/CR7VP2Q=
 github.com/golang/lint v0.0.0-20181026193005-c67002cb31c3/go.mod h1:tluoj9z5200jBnyusfRPU2LqT6J+DAorxEvtC7LHB+E=
 github.com/golang/mock v1.1.1/go.mod h1:oTYuIxOrZwtPieC+H1uAHpcLFnEyAGVDL/k47Jfbm0A=
